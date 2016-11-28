@@ -1,0 +1,95 @@
+CREATE TABLE tbl_Admin (
+  Adm_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  Adm_Username VARCHAR (100),
+  Adm_Password VARCHAR (255)
+)ENGINE InnoDB;
+
+CREATE TABLE tbl_Provinsi (
+  Pro_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  Pro_Nama VARCHAR (100)
+)ENGINE InnoDB;
+
+CREATE TABLE tbl_Kabupaten (
+  Kab_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  Kab_IdProvinsi INT NOT NULL,
+  FOREIGN KEY (Kab_IdProvinsi) REFERENCES tbl_Provinsi(Pro_Id),
+  Kab_Nama VARCHAR (100)
+)ENGINE InnoDB;
+
+CREATE TABLE tbl_Kecamatan (
+  Kec_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  Kec_IdKabupaten INT NOT NULL,
+  FOREIGN KEY (Kec_IdKabupaten) REFERENCES tbl_Kabupaten(Kab_Id),
+  Kec_Nama VARCHAR (100)
+)ENGINE InnoDB;
+
+CREATE TABLE tbl_Kelurahan (
+  Kel_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  Kel_IdKecamatan INT NOT NULL,
+  FOREIGN KEY (Kel_IdKecamatan) REFERENCES tbl_Kecamatan(Kec_Id),
+  Kel_Nama VARCHAR (100)
+)ENGINE InnoDB;
+
+CREATE TABLE tbl_Jemaat (
+   Jem_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   Jem_IdKelurahan INT NOT NULL,
+   Jem_Nama VARCHAR (100),
+   Jem_TanggalLahir DATE,
+   Jem_JenisKelamin ENUM('Perumpuan', 'Laki-Laki'),
+   Jem_Alamat TEXT,
+   Jem_NomorTelepon VARCHAR(20),
+   FOREIGN KEY(Jem_IdKelurahan) REFERENCES tbl_Kelurahan(Kel_Id)
+)ENGINE InnoDB;
+
+CREATE TABLE tbl_Besuk (
+   Bes_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   Bes_IdJemaat INT NOT NULL,
+   Bes_Tanggal Date,
+   Bes_Jam VARCHAR(10),
+   Bes_Keterangan TEXT,
+   Bes_Histori TEXT,
+   Bes_Status ENUM('Sukses', 'Cancel'),
+   FOREIGN KEY(Bes_IdJemaat) REFERENCES tbl_Jemaat(Jem_Id)
+)ENGINE InnoDB;
+
+CREATE TABLE tbl_Pengumuman (
+   Peng_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   Peng_Judul VARCHAR (100),
+   Peng_Tempat VARCHAR (100),
+   Peng_Tanggal DATE,
+   Peng_Waktu TIME,
+   Peng_Keterangan TEXT,
+   Peng_Foto TEXT
+)ENGINE InnoDB;
+
+CREATE TABLE tbl_Renungan (
+  Ren_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  Ren_Judul VARCHAR (100),
+  Ren_NatsAlkitab VARCHAR (100),
+  Ren_Isi TEXT,
+  Ren_Foto TEXT
+)ENGINE InnoDB;
+
+CREATE TABLE tbl_JadwalIbadah (
+   Jib_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   Jib_Ibadah VARCHAR (100),
+   Jib_Tanggal Date,
+   Jib_Waktu VARCHAR (50),
+   Jib_Pengkhotbah VARCHAR (100),
+   Jib_Tema VARCHAR (100),
+   Jib_Liturgi VARCHAR (100),
+   Jib_Pemusik VARCHAR (100),
+   Jib_Penyambut VARCHAR (100),
+   Jib_Kolekte VARCHAR (100),
+   Jib_Penerjemah VARCHAR (100)
+)ENGINE InnoDB;
+
+CREATE TABLE tbl_HambaTuhan (
+  Hat_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  Hat_Nama VARCHAR (100),
+  Hat_NomorTelepon VARCHAR (20),
+  Hat_Jabatan VARCHAR (100),
+  Hat_Foto TEXT
+)ENGINE InnoDB;
+
+
